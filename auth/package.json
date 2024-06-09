@@ -1,0 +1,11 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "Auth Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "ccoder",
+  "license": "ISC"
+}
