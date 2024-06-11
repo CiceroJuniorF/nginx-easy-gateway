@@ -1,0 +1,16 @@
+services:
+
+  m1:
+    image: mynodejs:latest
+    volumes:
+      - ./services/m1:/m1
+    working_dir: /m1
+    command: npm install
+
+  m2:
+    image: mynodejs:latest
+    volumes:
+      - ./services/m2:/m2
+    working_dir: /m2
+    command: npm install
+

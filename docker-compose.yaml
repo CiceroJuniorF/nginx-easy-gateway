@@ -1,31 +1,51 @@
-version: '3'
+networks:
+  nginx-easy-gateway:
+    external: false
+
 services:
 
   gateway:
-    build: ./gateway
-    # Add any additional configuration for gateway service here
+    image: mynginx:latest
+    container_name: gateway
+    hostname: gateway
+    networks:
+      - nginx-easy-gateway
     ports:
       - 80:80
-      - 443:443
     depends_on:
       - m1
       - m2
-      - auth
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf
       
   m1:
-    build: ./services/m1
-    # Add any additional configuration for m1 service here
-    ports:
-      - 3000:3000
+    image: mynodejs:latest
+    container_name: m1
+    hostname: m1    
+    networks:
+      - nginx-easy-gateway
+    volumes:
+      - ./services/m1:/m1
+    expose:
+      - 3000
+    working_dir: /m1
+    command: npm run start:dev
 
   m2:
-    build: ./services/m2
-    # Add any additional configuration for m2 service here
-    ports:
-      - 4000:4000
+    image: mynodejs:latest
+    container_name: m2
+    hostname: m2    
+    networks:
+      - nginx-easy-gateway
+    volumes:
+      - ./services/m2:/m2
+    expose:
+      - 3000
+    working_dir: /m2
+    command: npm run start:dev
 
-  auth:
-    build: ./auth
-    # Add any additional configuration for auth service here
-    ports:
-      - 5000:5000
+  # auth:
+  #   build: ./auth
+  #   # Add any additional configuration for auth service here
+  #   ports:
+  #     - 5000:5000
