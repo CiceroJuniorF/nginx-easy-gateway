@@ -14,3 +14,9 @@ services:
     working_dir: /m2
     command: npm install
 
+  auth:
+    image: mynodejs:latest
+    volumes:
+      - ./auth:/auth
+    working_dir: /auth
+    command: npm install

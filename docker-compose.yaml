@@ -15,8 +15,10 @@ services:
     depends_on:
       - m1
       - m2
+      - auth
     volumes:
       - ./gateway/nginx.conf:/etc/nginx/nginx.conf
+      - ./static:/usr/share/nginx/html
       
   m1:
     image: mynodejs:latest
@@ -44,8 +46,15 @@ services:
     working_dir: /m2
     command: npm run start:dev
 
-  # auth:
-  #   build: ./auth
-  #   # Add any additional configuration for auth service here
-  #   ports:
-  #     - 5000:5000
+  auth:
+    image: mynodejs:latest
+    container_name: auth
+    hostname: auth    
+    networks:
+      - nginx-easy-gateway
+    volumes:
+      - ./auth:/auth
+    expose:
+      - 3000
+    working_dir: /auth
+    command: npm run start:dev
