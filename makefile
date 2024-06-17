@@ -6,7 +6,7 @@ build:
 	docker-compose -f docker-compose.build.yaml up
 	docker-compose -f docker-compose.build.yaml down
 
-up:
+start:
 	docker-compose up -d
 
 down:
